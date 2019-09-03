@@ -15,8 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.PersistenceContext;
-import javax.persistence.EntityManager;
+//import javax.persistence.PersistenceContext;
+//import javax.persistence.EntityManager;
 
 import javax.validation.Valid;
 import java.util.Date;
@@ -40,8 +40,8 @@ public class UserController
     @Autowired
     private Environment environment;
     
-    @PersistenceContext
-    private EntityManager entityManager;    
+//    @PersistenceContext
+//    private EntityManager entityManager;
 
     @GetMapping("/users")
     public List<User> getAllUsers()
@@ -83,8 +83,8 @@ public class UserController
     {
         user.validate();
     	User savedUser = userRepository.saveAndFlush(user);
-    	entityManager.flush();
-    	entityManager.refresh(savedUser);
+        //entityManager.flush();
+        //entityManager.refresh(savedUser);
 
         SendEmailSMTP emailService = new SendEmailSMTP();
         String emailText = emailService.sendEmail(environment, savedUser);

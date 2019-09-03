@@ -42,7 +42,7 @@ public class UserEmail
         return userId;
     }
 
-    public void setUserId(long id)
+    public void setUserId(long userId)
     {
         this.userId = userId;
     }
