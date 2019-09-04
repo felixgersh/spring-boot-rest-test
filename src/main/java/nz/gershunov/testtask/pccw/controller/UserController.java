@@ -39,7 +39,7 @@ public class UserController
 
     @Autowired
     private Environment environment;
-    
+
 //    @PersistenceContext
 //    private EntityManager entityManager;
 
@@ -48,14 +48,14 @@ public class UserController
     {
         return userRepository.findAll();
     }
-    
+
     protected User getUserByStringId(String userIdStr) throws BadRequestException, ResourceNotFoundException
     {
         Long userId;
-    	try {
-    		userId = Long.valueOf(userIdStr);
+        try {
+            userId = Long.valueOf(userIdStr);
         } catch (NumberFormatException nfe) {
-        	throw new BadRequestException("User ID should be numeric");
+            throw new BadRequestException("User ID should be numeric");
         }
         return userRepository
             .findById(userId)
@@ -66,9 +66,9 @@ public class UserController
     public ResponseEntity<UserFull> getUserById(@PathVariable(value = "id") String userIdStr)
         throws BadRequestException, ResourceNotFoundException
     {
-    	User user = getUserByStringId(userIdStr);
+        User user = getUserByStringId(userIdStr);
 
-    	UserEmail userEmail = null;
+        UserEmail userEmail = null;
         List<UserEmail> userEmailList = userEmailRepository.findByUserId(user.getId());
         if (userEmailList.size() > 0) {
             userEmail = userEmailList.get(0);
@@ -82,7 +82,7 @@ public class UserController
     public User createUser(@Valid @RequestBody User user) throws BadRequestException
     {
         user.validate();
-    	User savedUser = userRepository.saveAndFlush(user);
+        User savedUser = userRepository.saveAndFlush(user);
         //entityManager.flush();
         //entityManager.refresh(savedUser);
 
@@ -102,13 +102,13 @@ public class UserController
         @PathVariable(value = "id") String userIdStr, @Valid @RequestBody User userDetails)
         throws BadRequestException, ResourceNotFoundException
     {
-    	User user = getUserByStringId(userIdStr);
+        User user = getUserByStringId(userIdStr);
 
-    	user.setFirstName(userDetails.getFirstName());
+        user.setFirstName(userDetails.getFirstName());
         user.setLastName(userDetails.getLastName());
         user.setEmail(userDetails.getEmail());
         user.setUpdatedAt(new Date());
-    	user.validate();
+        user.validate();
 
         User updatedUser = userRepository.save(user);
         return ResponseEntity.ok(updatedUser);
